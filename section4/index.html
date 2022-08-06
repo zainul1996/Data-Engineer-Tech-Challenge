@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div>
+        <canvas id="chart"></canvas>
+    </div>
+    <script>
+        // get request https://api.covid19api.com/country/south-africa/status/confirmed
+        // get request https://api.covid19api.com/country/south-africa/status/recovered
+        // get request https://api.covid19api.com/country/south-africa/status/deaths
+        $(document).ready(function () {
+            data = {
+                labels: [],
+                datasets: [{
+                    label: 'Confirmed',
+                    data: [],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Recovered',
+                    data: [],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Deaths',
+                    data: [],
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 1
+                }]
+            };
+            // plot confirmed cases, recovered cases and deaths on the same graph
+            $.get("https://api.covid19api.com/country/south-africa/status/confirmed", function (confirmed) {
+                $.get("https://api.covid19api.com/country/south-africa/status/recovered", function (recovered) {
+                    $.get("https://api.covid19api.com/country/south-africa/status/deaths", function (deaths) {
+                        // convert date to readable format
+                        for (var i = 0; i < confirmed.length; i++) {
+                            data.labels.push(new Date(confirmed[i].Date).toLocaleDateString());
+                            data.datasets[0].data.push(confirmed[i].Cases);
+                            data.datasets[1].data.push(recovered[i].Cases);
+                            data.datasets[2].data.push(deaths[i].Cases);
+                        }
+
+                        var ctx = document.getElementById('chart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: data,
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>
