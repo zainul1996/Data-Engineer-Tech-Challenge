@@ -4,6 +4,8 @@
 
 This repository contains the 6 sections of the Data Engineer Tech Challenge.
 
+P.S I am having exams and couldn't spend too much time on this challenge. I did my best with the time I have.
+
 ## Section 1: Data Pipelines
 
 Developed a simple script with 2 arguments, --setup and --preprocess.
