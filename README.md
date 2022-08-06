@@ -18,6 +18,10 @@ Running the script with --preprocess will run the preprocess portion that would 
 
 Output will be stored as output.csv in the section1 directory.
 
+## Section 2: Databases
+
+Used Postgres docker image to create a Postgres database, and created 2 tables in the database to fit the criteria in the simplest way. Would have normalised the tables if I didnt have to study for exams.
+
 ## Section 3: System Design
 
 Designed an architecture diagram for the given problem using AWS tools as I'm currently studying for the AWS Certified Cloud Practitioner exam. Used a combination of AWS Lambda, AWS dynamoDB, and AWS S3 to implement the architecture. The system will be able to log down the required information in dynamoDB as its being stored in S3.
@@ -25,6 +29,10 @@ Designed an architecture diagram for the given problem using AWS tools as I'm cu
 ## Section 4: Charts and APIs
 
 Developed a simple web application to visualise Covid-19 data of Singapore in a single chart using chartJS. An image of the vizualisation is also included.
+
+## Section 5: Machine Learning
+
+I have developed a Decision Tree Classifier with an accuracy of 30% on the test set. Tried various method of encoding the data and dropped the person column to increase the accuracy. Unable to find the best parameters for the model.
 
 ## Section 6: What is Data Engineering?
 
