@@ -4,8 +4,6 @@
 
 This repository contains the 6 sections of the Data Engineer Tech Challenge.
 
-P.S I am having exams and couldn't spend too much time on this challenge. I did my best with the time I have.
-
 ## Section 1: Data Pipelines
 
 Developed a python script with 2 subparsers, setup and process.
@@ -21,6 +19,7 @@ Developed a python script with 2 subparsers, setup and process.
         --output_file(default: output.csv)      Path to the output file.
 
 Logs with timestamps will be stored in logs.txt and will be persisted for the purpose of debugging/history.
+Dependencies are included in the requirements.txt file.
 
 ## Section 2: Databases
 
