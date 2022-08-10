@@ -39,7 +39,8 @@ Contains 6 tables in the database:
 - Select salespeople and their total sales in descending order.
 - Select customers and their total spent amount in descending order.
 
-Instructions
+Instructions to setup
+    
     Setup Postgres DB and create tables
     docker build -t my-postgres-db ./
     docker run -d --name my-postgresdb-container -p 5432:5432 my-postgres-db
