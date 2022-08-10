@@ -15,9 +15,10 @@ Developed a python script with 2 subparsers, setup and process.
     python3 section1.py setup           Create cron job that would run process every day at 12:00am and overwrites existing output.csv.
     python3 section1.py process         Run the process portion that would carry out the the data processing.
         Available arguments:
-            --overwrite(default: y)                 y - Overwrite the output file if it already exists.
-                                                    n - Do not overwrite the output file if it already exists.
-            --output_file(default: output.csv)      Path to the output file.
+        --overwrite(default: y)                 y - Overwrite the output file if it already exists.
+                                                n - Do not overwrite the output file if it already exists.
+
+        --output_file(default: output.csv)      Path to the output file.
 
 Logs with timestamps will be stored in logs.txt and will be persisted for the purpose of debugging/history.
 
