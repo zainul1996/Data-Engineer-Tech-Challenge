@@ -40,30 +40,31 @@ Contains 6 tables in the database:
 - Select customers and their total spent amount in descending order.
 
 Instructions
-Setup Postgres DB and create tables
-docker build -t my-postgres-db ./
-docker run -d --name my-postgresdb-container -p 5432:5432 my-postgres-db
+    Setup Postgres DB and create tables
+    docker build -t my-postgres-db ./
+    docker run -d --name my-postgresdb-container -p 5432:5432 my-postgres-db
 
-Setup pgadmin4
-docker pull dpage/pgadmin4
-docker run --name my-pgadmin -p 82:80 -e 'PGADMIN_DEFAULT_EMAIL=pgadmin@gmail.com' -e 'PGADMIN_DEFAULT_PASSWORD=postgresmaster' -d dpage/pgadmin4
+    Setup pgadmin4
+    docker pull dpage/pgadmin4
+    docker run --name my-pgadmin -p 82:80 -e 'PGADMIN_DEFAULT_EMAIL=pgadmin@gmail.com' -e 'PGADMIN_DEFAULT_PASSWORD=postgresmaster' -d
+    dpage/pgadmin4
 
-Visit localhost:82 on your browser and login with:
-username: pgadmin@gmail.com
-password: postgresmaster
+    Visit localhost:82 on your browser and login with:
+    username: pgadmin@gmail.com
+    password: postgresmaster
 
-Right click "Server" > Click "Register" > "Server"
-Under the General Tab:
-Name: postgres_db
+    Right click "Server" > Click "Register" > "Server"
+    Under the General Tab:
+    Name: postgres_db
 
-Under the connection tab:
-Hostname/Address: {Enter the IP of the Container running postgres}
-Port: 5432
-Username: postgres
-Password: postgres
+    Under the connection tab:
+    Hostname/Address: {Enter the IP of the Container running postgres}
+    Port: 5432
+    Username: postgres
+    Password: postgres
 
-To find out the IP of the Container running postgres, use the below command:
-docker inspect my-postgresdb-container -f "{{json .NetworkSettings.Networks}}"
+    To find out the IP of the Container running postgres, use the below command:
+    docker inspect my-postgresdb-container -f "{{json .NetworkSettings.Networks}}"
 
 ## Section 3: System Design
 
