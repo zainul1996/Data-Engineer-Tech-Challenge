@@ -24,7 +24,46 @@ Logs with timestamps will be stored in logs.txt and will be persisted for the pu
 
 ## Section 2: Databases
 
-Used Postgres docker image to create a Postgres database, and created 2 tables in the database to fit the criteria in the simplest way. Would have normalised the tables if I didnt have to study for exams.
+Contains 6 tables in the database:
+
+- Customer id(primary key), name, mobileNo
+- Salesperson - id(primary key), name
+- Transaction - id(primary key), salesPersonId(foreign key), customerId(foreign key), datetimeCreated
+- Cars - id(primary key), serialNo, price, weight, transactionId(foreign key), carModelId(foreign key)
+- CarModel - id(primary key), modelName, manufacturerId
+- Manufacturer - id(primary key),name
+
+3 Select Statements Created:
+
+- Select top 3 manufacturers with the highest number of cars sold in the current month.
+- Select salespeople and their total sales in descending order.
+- Select customers and their total spent amount in descending order.
+
+Instructions
+Setup Postgres DB and create tables
+docker build -t my-postgres-db ./
+docker run -d --name my-postgresdb-container -p 5432:5432 my-postgres-db
+
+Setup pgadmin4
+docker pull dpage/pgadmin4
+docker run --name my-pgadmin -p 82:80 -e 'PGADMIN_DEFAULT_EMAIL=pgadmin@gmail.com' -e 'PGADMIN_DEFAULT_PASSWORD=postgresmaster' -d dpage/pgadmin4
+
+Visit localhost:82 on your browser and login with:
+username: pgadmin@gmail.com
+password: postgresmaster
+
+Right click "Server" > Click "Register" > "Server"
+Under the General Tab:
+Name: postgres_db
+
+Under the connection tab:
+Hostname/Address: {Enter the IP of the Container running postgres}
+Port: 5432
+Username: postgres
+Password: postgres
+
+To find out the IP of the Container running postgres, use the below command:
+docker inspect my-postgresdb-container -f "{{json .NetworkSettings.Networks}}"
 
 ## Section 3: System Design
 
