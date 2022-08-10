@@ -8,17 +8,18 @@ P.S I am having exams and couldn't spend too much time on this challenge. I did 
 
 ## Section 1: Data Pipelines
 
-Developed a simple script with 2 arguments, --setup and --preprocess.
+Developed a python script with 2 subparsers, setup and process.
 
-    Commands to run:
-    python3 section1.py --setup
-    python3 section1.py --preprocess
+    Commands                            Description
+    python3 section1.py --help          Show help message
+    python3 section1.py setup           Create cron job that would run process every day at 12:00am and overwrites existing output.csv.
+    python3 section1.py process         Run the process portion that would carry out the the data processing.
+        Available arguments:
+            --overwrite(default: y)                 y - Overwrite the output file if it already exists.
+                                                    n - Do not overwrite the output file if it already exists.
+            --output_file(default: output.csv)      Path to the output file.
 
-Running the script with --setup will create the cron job that would trigger every day at 12:00am to run the preprocess script.
-
-Running the script with --preprocess will run the preprocess portion that would carry out the the data processing.
-
-Output will be stored as output.csv in the section1 directory.
+Logs with timestamps will be stored in logs.txt and will be persisted for the purpose of debugging/history.
 
 ## Section 2: Databases
 

@@ -48,7 +48,6 @@ def process(name, price):
 
 def main_process():
     start_time = time.time()
-    logging.info("Preprocessing started...")
     removed = 0
     total = 0
 
@@ -114,7 +113,7 @@ def main_process():
         logging.info(f"{removed} rows removed")
         logging.info(f"{total} rows written to output.csv")
 
-    logging.info(f"Preprocessing completed in {time.time() - start_time} seconds")
+    logging.info(f"Processing completed in {time.time() - start_time} seconds")
 
 
 if __name__ == "__main__":
