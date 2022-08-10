@@ -35,12 +35,16 @@ Contains 6 tables in the database:
 
 3 Select Statements Created:
 
-- Select top 3 manufacturers with the highest number of cars sold in the current month.
-- Select salespeople and their total sales in descending order.
-- Select customers and their total spent amount in descending order.
+- Select top 3 manufacturers with the highest number of cars sold in the current month. (selectTopThreeManufacturers.sql)
+- Select salespeople and their total sales in descending order. (selectTopSalesperson.sql)
+- Select customers and their total spent amount in descending order. (selectTopSpendingCustomers.sql)
+
+1 Insert Statement Created:
+
+- Inserts mock data for testing Select statements. (insertMockData.sql)
 
 Instructions to setup
-    
+
     Setup Postgres DB and create tables
     docker build -t my-postgres-db ./
     docker run -d --name my-postgresdb-container -p 5432:5432 my-postgres-db
