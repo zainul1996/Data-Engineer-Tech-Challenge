@@ -24,7 +24,7 @@ Logs with timestamps will be stored in logs.txt and will be persisted for the pu
 
 ## Section 2: Databases
 
-Contains 6 tables in the database:
+Contains 6 tables in the database (check ERD_diagram.png for visual representation of the database):
 
 - Customer id(primary key), name, mobileNo
 - Salesperson - id(primary key), name
