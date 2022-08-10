@@ -1,34 +1,25 @@
 import argparse
 import csv
+import logging
 import os
 import time
 
 from crontab import CronTab
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--setup",
-    help="Setup cron job to preprocess data every day at 12:00 AM",
-    action="store_true",
-)
-parser.add_argument(
-    "--preprocess",
-    help="Preprocess the data and write to output.csv",
-    action="store_true",
-)
-args = parser.parse_args()
-
 
 def setup_cron():
-    print("Setting up cron job...")
+    logging.info("Setting up cron job...")
     cron = CronTab(user=True)
     working_directory = os.getcwd()
-    script_directory = os.path.join(working_directory, "section1.py --preprocess")
+    script_directory = os.path.join(
+        working_directory, "section1.py process --overwrite y"
+    )
 
     job = cron.new(command=f"python3 {script_directory}")
     job.minute.on(0)
     job.hour.on(12)
     cron.write()
+    logging.info("Cron job setup completed")
 
 
 def process(name, price):
@@ -48,25 +39,31 @@ def process(name, price):
         above_100 = True
 
     # write first_name, last_name, price, above_100 to output.csv including a header row
-    with open("output.csv", "a") as output:
+    with open(f"{args.output_file}", "a") as output:
         writer = csv.writer(output, delimiter=",")
         if output.tell() == 0:
             writer.writerow(["first_name", "last_name", "price", "above_100"])
         writer.writerow([first_name, last_name, price, above_100])
 
 
-def preprocess():
+def main_process():
     start_time = time.time()
-    print("Preprocessing started...")
+    logging.info("Preprocessing started...")
     removed = 0
     total = 0
+
     # if output file exists, ask user if they want to overwrite it
-    if os.path.exists("output.csv"):
-        overwrite = input("Output file already exists. Overwrite? (y/n) ")
-        if overwrite == "y":
-            os.remove("output.csv")
+    if os.path.exists(f"{args.output_file}"):
+        if args.overwrite == "y":
+            logging.info("Removing output.csv")
+            os.remove(f"{args.output_file}")
+        elif args.overwrite == "n":
+            logging.info("File already exists")
+            logging.info("Exiting...")
+            exit()
         else:
-            print("Exiting...")
+            logging.info("Invalid overwrite option")
+            logging.info("Exiting...")
             exit()
 
     # merge dataset1.csv and dataset2.csv
@@ -113,18 +110,45 @@ def preprocess():
                 removed += 1
                 continue
 
-        print(f"{removed + total} total rows")
-        print(f"{removed} rows removed")
-        print(f"{total} rows written to output.csv")
-    print(f"Preprocessing completed in {time.time() - start_time} seconds")
+        logging.info(f"{removed + total} total rows")
+        logging.info(f"{removed} rows removed")
+        logging.info(f"{total} rows written to output.csv")
+
+    logging.info(f"Preprocessing completed in {time.time() - start_time} seconds")
 
 
-if args.setup:
-    setup_cron()
-elif args.preprocess:
-    preprocess()
-else:
-    print("No arguments provided")
-    print("Please use --setup or --preprocess")
-    print("Exiting...")
-    exit()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest="mode", required=True)
+    m1_parser = subparsers.add_parser(
+        "setup",
+        help="Setup cron job to run everyday at 12am to process dataset1.csv and dataset2.csv",
+    )
+    m2_parser = subparsers.add_parser(
+        "process",
+        help="process dataset1.csv and dataset2.csv",
+    )
+    m2_parser.add_argument(
+        "--output_file", type=str, required=False, default="output.csv"
+    )
+    m2_parser.add_argument("--overwrite", type=str, required=False, default="n")
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    file_handler = logging.FileHandler("logs.txt")
+    LOG_FORMAT = "%(asctime)s | %(levelname)s: %(message)s"
+    formatter = logging.Formatter(LOG_FORMAT)
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    current_datetime = time.strftime("%Y-%m-%d %H:%M:%S")
+    args = parser.parse_args()
+    if args.mode == "setup":
+        logging.info(f"Setting up cron job...")
+        setup_cron()
+    elif args.mode == "process":
+        logging.info(f"Processing data...")
+        main_process()
+    else:
+        logging.info(f"Invalid mode provided")
+        exit()
